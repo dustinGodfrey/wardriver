@@ -2,7 +2,9 @@
 
 
 <h2>Description</h2>
-Project consists of...
+<p>This project consists of using a Raspberry Pi 4, WiFi and GPS devices, and Wardriving software to create a fully headless, portable wardriving rig, with the abiity after drives to export the data to another system to clean up and create an interactve map that can be locally.
+</p>
+<p>The</p>
 
 
 <h2>Hardware Used</h2>
