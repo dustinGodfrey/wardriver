@@ -20,7 +20,7 @@
 
 <h2>Software Used </h2>
 
-- <b>Raspberry Pi OS Lite</b>
+- <b>Raspberry Pi OS Lite 32-bit</b>
 - <b>Kismet</b>
 - <b>GPSD</b>
 - <b>Aircrack-ng</b>
@@ -31,11 +31,10 @@
 
 <h2>Project walk-through:</h2>
 
-<!--
-<p align="center">
-Launch the utility: <br/>
-<img src="https://i.imgur.com/62TgaWL.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<br />
 
-</p>
--->
+<p align="center">
+<b>Flashing your Raspberry Pi SD Card:</b> <br/></p>
+<p align="center"> Start out by downloading the <a href="https://i.imgur.com/8WkMQ25.png">Raspberry Pi Imager</a>. Make sure your SD card is loaded and recognized by your computer. Select your device from the dropdown menu. To select operating system, select the Raspberry Pi OS Lite 32-bit by clicking "Raspberry Pi OS (Other). Lastly, choose your SD card from the list. **MAKE SURE YOU SELECT THE PROPER DISK TO ENSURE YOU DO NOT REFORMAT YOUR MAIN DRIVE** </p>
+<p align="center"> <img src="https://i.imgur.com/8WkMQ25.png" height="80%" width="80%" alt="Raspberry Pi Imager"/>
+<br /></p>
+
