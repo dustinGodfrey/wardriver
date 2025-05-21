@@ -1,5 +1,11 @@
-<h1>Wardriving Rig with Raspberry Pi 4</h1>
-
+<div align="center">
+<h1>Wardriving Rig with Raspberry Pi 4
+<br><a href="https://wigle.net">
+<img border="0" src="https://wigle.net/bi/V_jgKO+KY6mUnLGeWqrXRw.png">
+</a>
+</br>
+  </h1>
+</div>
 
 <h2>Project Overview</h2>
 <p>This project consists of using a Raspberry Pi 4, WiFi and GPS devices, and Wardriving software to create a fully headless, portable wardriving rig, with the ability after drives to export the data to another system to clean up and create an interactive map that can be locally hosted.</p>
@@ -83,8 +89,15 @@ python3 python3-setuptools python3-protobuf python3-requests \
 python3-numpy python3-serial python3-usb python3-dev python3-websockets \
 librtlsdr0 libubertooth-dev libbtbb-dev libmosquitto-dev</code></b></p>
 &nbsp;
-<p>
-<b>~Downloading, Compiling, and Configuring Kismet~</b></p>
-
+<p><b>~Downloading, Compiling, and Configuring Kismet~</b></p>
+<p>All the guides and walkthroughs that I read while building this project would download Kismet from repos using <code>sudo apt install kismet</code>. Unfortunately, I could never get this to pull down so I resulted to having to download and compile kismet from source code. To download and compile from source, enter the following commands..
+<pre><code>git clone https://www.kismetwireless.net/git/kismet.git
+cd kismet
+./configure
+make
+sudo make suidinstall
+sudo usermod -aG kismet &lt;your_user&gt;
+mkdir wardriving
+cd wardriving</code></pre></p>
 
 <p> Start<br><code></code></b></p>
