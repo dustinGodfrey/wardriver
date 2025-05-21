@@ -112,8 +112,10 @@ Now we need to update the Kismet configuration file located at <code>/usr/local/
 <br>Scroll more until you find this line</br>
   <p align="center"> <img src="https://i.imgur.com/hIe9isz.png" height="60%" width="60%" alt="gps config"/>
 </p>
-<p>And change yours to match the one in the image.<br>Save and Exit the configuration file.</br></p>
-</p>
+<p>And change yours to match the one in the image.<br>Save and Exit the configuration file.</br></p></p>
 <p>
-  
+  From here you can create a systemd service to start kismet everytime the Pi is booted on. This is the simplest way to launch kismet from the headless system. I created a more custom and complex way to start kismet involving a tactile button and LEDS which I will go into a little later.
 </p>
+<p><code>sudo nano /etc/systemd/system/kismet.service</code></p>
+<p>Paste in the configuration file from </p>
+<p align="center"> <img src="https://i.imgur.com/6Eq3Kj8.png" height="60%" width="60%" alt="kismet.service"/></p>
