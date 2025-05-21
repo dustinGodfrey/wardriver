@@ -110,12 +110,20 @@ Now we need to update the Kismet configuration file located at <code>/usr/local/
   <p>And change the source to the interface name you are using for your WiFi adapter</p>
 </p>
 <br>Scroll more until you find this line</br>
-  <p align="center"> <img src="https://i.imgur.com/hIe9isz.png" height="60%" width="60%" alt="gps config"/>
-</p>
+  <p align="center"> <img src="https://i.imgur.com/hIe9isz.png" height="60%" width="60%" alt="gps config"/></p>
 <p>And change yours to match the one in the image.<br>Save and Exit the configuration file.</br></p></p>
+<p>Kismet comes with a logging config that you can edit to customize where and how you want your logs handled. This configuration can be located at <code>/usr/local/etc/kismet_logging.conf</code></p>
+<p>Here you can enable logging and select which log types you would like kismet to use</p>
+<p align="center"> <img src="https://i.imgur.com/JQk1pM0.png" height="60%" width="60%" alt="logging_enable"/></p>
+<p>Here you can customize exactly how kismet will name the log</p>
+<p align="center"> <img src="https://i.imgur.com/6uKAHwu.png" height="60%" width="60%" alt="logging_naming"/></p>
 <p>
   From here you can create a systemd service to start kismet everytime the Pi is booted on. This is the simplest way to launch kismet from the headless system. I created a more custom and complex way to start kismet involving a tactile button and LEDS which I will go into a little later.
 </p>
 <p><code>sudo nano /etc/systemd/system/kismet.service</code></p>
-<p>Paste in the configuration file from </p>
+<p>Paste in the configuration file from <a href="https://github.com/dustinGodfrey/WardrivingRig/blob/main/kismet.service">kismet.service</a>. Make sure to change the 'user' and 'group' to match your configurations</p>
 <p align="center"> <img src="https://i.imgur.com/6Eq3Kj8.png" height="60%" width="60%" alt="kismet.service"/></p>
+<p>Enable your service to start from boot</p>
+<pre><code>sudo systemctl daemon-reexec
+sudo systemctl enable kismet.service</code></pre>
+<p>This is a good stopping point for anyone that wants a less complicated setup. It is now fully set up to Wardrive each time the Pi is powered on. </p>
