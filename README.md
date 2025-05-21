@@ -46,10 +46,31 @@
 <b>~Updating, Configuring Hardware, and Installing Dependencies~</b></p>
 <p> Run Updates<br><code>sudo apt update &amp;&amp; sudo apt upgrade -y</code></b></p>
 <p> Install GPS software<br><code>sudo apt install gpsd gpsd-clients gpsd-tools -y</code></b></p>
+<p>At this point, we will update GPSD to its current version. I wish I had known about this sooner, as I spent days troubleshooting this. The version of GPSD that downloads from the repo is not the current version and will cause issues with Kismet. Without updating GPSD to v3.25 Kismet will not correctly log the GPS coodinates for your drives. My kismet was logging the initial location that the GPS logged for every single network found. If I restarted Kismet, it would then log the rest of those with the new location after the restart. So I would have a list of networks but all with the same GPS location.</p>
+<p> To download the latest version, we will need to compile it from source code. Please enter the following commands to update..
+<pre><code>
+  
+sudo systemctl stop gpsd.socket
+sudo systemctl disable gpsd.socket
+
+sudo apt install -y scons \ libncurses-dev python-dev-is-python3 pps-tools git-core asciidoctor \
+python3-matplotlib \ build-essential manpages-dev pkg-config python3-distutils
+
+wget http://download.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.gz
+tar -xzf gpsd-3.25.tar.gz
+cd gpsd-3.25/
+
+sudo scons
+sudo scons udev-install
+sudo reboot
+</code></pre>
+Huge thanks to <a href="https://github.com/kismetwireless/kismet/issues/426">k-rku</a> on GitHub for this find.</p>
 <p> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged then plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></b></p>
 <p> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<br><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code></b><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></b></p>
-<p>To check if the GPS module is running, run either <code>gpsmon</code> or <code>cgps</code> and check if there is any live data. If no data shows up, make sure you are starting the correct GPS module, and make sure you give the module time to fully boot up and connect to satellites</p>
-<br>!!!!!!!!!!!!!!!!!!!!!!!!This Needs Pics and Update!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</br>
+<p>To check if the GPS module is running, run either <code>gpsmon</code> or <code>cgps</code> and check if there is any live data. If no data shows up, make sure you are starting the correct GPS module, and make sure you give the module time to fully boot up and connect to satellites. I prefer to use <code>cgps</code> becuause it will give you a neater, more human-readable version of the data, <code>gpsmon</code> will give you mostly raw data which is a little more difficult to parse.</p>
+<p>Here is an example of the output from <code>cgps</code>. NOTE: For privacy I have redacted my location, but you should see an active Latitude and Longitude for your current location.</p>
+<p align="center"> <img src="https://i.imgur.com/lNopkE2.png" height="60%" width="60%" alt="cgps output"/>
+</p>
 <p> Install aircrack-ng, a suite of wifi hacking tools. Specifically, we will be using airmon-ng for the setup of this wardriving rig<br><code>sudo apt install aircrack-ng</code></b></p>
 <p> Run the software to list all available wifi cards connected to the pi.<br><code>sudo airmon-ng</code></b></p>
 <p> Look for the Chipset that resembles your band of WiFi adapter. Anything related to "Broadcom" or "brcmdfmac" will be your raspberry pi onboard adapter, please do not use this. You will be disconnected from SSH. Run this command to place your WiFi adapter into monitor mode. Monitor mode allows it to gather data from all available surrounding networks.<br><code>sudo airmon-ng start &lt;interface_name&gt;</code></b></p>
