@@ -44,10 +44,12 @@
 <p align="center"> <img src="https://i.imgur.com/8WkMQ25.png" height="60%" width="60%" alt="Raspberry Pi Imager"/>
 </p>
 &nbsp;
+
 <p>
 <b>~Booting and Connecting to the Pi~</b> <br/></p>
 <p> Insert the SD card into the pi, connect the WiFi and GPS adapters, then power it on. After the pi fully boots (this might take a while the first time) use the IP address listed in your routers web UI to SSH into the pi using the credentials set during the flashing.<br><code>ssh &lt;username&gt;@&lt;ip-address&gt;</code></b> </p>
 &nbsp;
+
 <p>
 <b>~Updating, Configuring Hardware, and Installing Dependencies~</b></p>
 <p> Run Updates<br><code>sudo apt update &amp;&amp; sudo apt upgrade -y</code></b></p>
@@ -99,5 +101,19 @@ sudo make suidinstall
 sudo usermod -aG kismet &lt;your_user&gt;
 mkdir wardriving
 cd wardriving</code></pre></p>
-
-<p> Start<br><code></code></b></p>
+<p>
+Now we need to update the Kismet configuration file located at <code>/usr/local/etc/kismet.conf</code>
+  <br><code>sudo nano /usr/local/etc/kismet.conf</code></br>
+  <br>Scroll and look for this line</br>
+  <p align="center"> <img src="https://i.imgur.com/A0VMZPZ.png" height="60%" width="60%" alt="wifi config"/>
+</p>
+  <p>And change the source to the interface name you are using for your WiFi adapter</p>
+</p>
+<br>Scroll more until you find this line</br>
+  <p align="center"> <img src="https://i.imgur.com/hIe9isz.png" height="60%" width="60%" alt="gps config"/>
+</p>
+<p>And change yours to match the one in the image.<br>Save and Exit the configuration file.</br></p>
+</p>
+<p>
+  
+</p>
