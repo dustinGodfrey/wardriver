@@ -72,7 +72,7 @@ sudo reboot
 </code></pre>
 Huge thanks to <a href="https://github.com/kismetwireless/kismet/issues/426">k-rku</a> on GitHub for this find.</p>
 <p> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged then plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></b></p>
-<p> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<br><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code></b><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></b></p>
+<p> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<pre><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code></b><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></pre></p>
 <p>To check if the GPS module is running, run either <code>gpsmon</code> or <code>cgps</code> and check if there is any live data. If no data shows up, make sure you are starting the correct GPS module, and make sure you give the module time to fully boot up and connect to satellites. I prefer to use <code>cgps</code> becuause it will give you a neater, more human-readable version of the data, <code>gpsmon</code> will give you mostly raw data which is a little more difficult to parse.</p>
 <p>Here is an example of the output from <code>cgps</code>. NOTE: For privacy I have redacted my location, but you should see an active Latitude and Longitude for your current location.</p>
 <p align="center"> <img src="https://i.imgur.com/lNopkE2.png" height="60%" width="60%" alt="cgps output"/>
@@ -81,13 +81,13 @@ Huge thanks to <a href="https://github.com/kismetwireless/kismet/issues/426">k-r
 <p> Run the software to list all available wifi cards connected to the pi.<br><code>sudo airmon-ng</code></b></p>
 <p> Look for the Chipset that resembles your band of WiFi adapter. Anything related to "Broadcom" or "brcmdfmac" will be your raspberry pi onboard adapter, please do not use this. You will be disconnected from SSH. Run this command to place your WiFi adapter into monitor mode. Monitor mode allows it to gather data from all available surrounding networks.<br><code>sudo airmon-ng start &lt;interface_name&gt;</code></b></p>
 <p> Run again to check the status of your adapter. If everything worked as it should, your device will not be listed with 'mon' after the interface name such as wlan1mon, or say 'monitor' or "monitor mode' at the end of your chipset name<br><code>sudo airmon-ng</code></b></p>
-<p> Install this list of dependencies needed for Kismet<br><code>sudo apt install build-essential git libwebsockets-dev pkg-config \
+<p> Install this list of dependencies needed for Kismet<pre><code>sudo apt install build-essential git libwebsockets-dev pkg-config \
 zlib1g-dev libnl-3-dev libnl-genl-3-dev libcap-dev libpcap-dev \
 libnm-dev libdw-dev libsqlite3-dev libprotobuf-dev libprotobuf-c-dev \
 protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev \
 python3 python3-setuptools python3-protobuf python3-requests \
 python3-numpy python3-serial python3-usb python3-dev python3-websockets \
-librtlsdr0 libubertooth-dev libbtbb-dev libmosquitto-dev</code></b></p>
+librtlsdr0 libubertooth-dev libbtbb-dev libmosquitto-dev</code></pre></p>
 &nbsp;
 <p><b>~Downloading, Compiling, and Configuring Kismet~</b></p>
 <p>All the guides and walkthroughs that I read while building this project would download Kismet from repos using <code>sudo apt install kismet</code>. Unfortunately, I could never get this to pull down so I resulted to having to download and compile kismet from source code. To download and compile from source, enter the following commands..
