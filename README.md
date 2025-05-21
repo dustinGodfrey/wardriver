@@ -32,25 +32,38 @@
 <h2>Project walk-through:</h2>
 
 
-<p align="center">
+<p>
 <b>~Flashing the Raspberry Pi SD Card~</b> <br/></p>
-<p align="center"> Start out by downloading the <a href="https://i.imgur.com/8WkMQ25.png">Raspberry Pi Imager</a>. Make sure your SD card is loaded and recognized by your computer. Select your device from the dropdown menu. To select operating system, select the Raspberry Pi OS Lite 32-bit by clicking "Raspberry Pi OS (Other). Under the storage dropdown choose your SD card from the list. **MAKE SURE YOU SELECT THE PROPER DISK TO ENSURE YOU DO NOT REFORMAT YOUR MAIN DRIVE** Lastly, agree to adding configurations, add in your home network, and give the pi a host and user name</p>
+<p> Start out by downloading the <a href="https://i.imgur.com/8WkMQ25.png">Raspberry Pi Imager</a>. Make sure your SD card is loaded and recognized by your computer. Select your device from the dropdown menu. To select operating system, select the Raspberry Pi OS Lite 32-bit by clicking "Raspberry Pi OS (Other). Under the storage dropdown choose your SD card from the list. **MAKE SURE YOU SELECT THE PROPER DISK TO ENSURE YOU DO NOT REFORMAT YOUR MAIN DRIVE** Lastly, agree to adding configurations, add in your home network, and give the pi a host and user name</p>
 <p align="center"> <img src="https://i.imgur.com/8WkMQ25.png" height="60%" width="60%" alt="Raspberry Pi Imager"/>
 </p>
-
-<p align="center">
+&nbsp;
+<p>
 <b>~Booting and Connecting to the Pi~</b> <br/></p>
-<p align="center"> Insert the SD card into the pi, connect the WiFi and GPS adapters, then power it on. After the pi fully boots (this might take a while the first time) use the IP address listed in your routers web UI to SSH into the pi using the credentials set during the flashing.<br><code>ssh &lt;username&gt;@&lt;ip-address&gt;</code></b> </p>
-
-<p align="center">
+<p> Insert the SD card into the pi, connect the WiFi and GPS adapters, then power it on. After the pi fully boots (this might take a while the first time) use the IP address listed in your routers web UI to SSH into the pi using the credentials set during the flashing.<br><code>ssh &lt;username&gt;@&lt;ip-address&gt;</code></b> </p>
+&nbsp;
+<p>
 <b>~Updating, Configuring Hardware, and Installing Dependencies~</b></p>
-<p align="center"> Run Updates<br><code>sudo apt update &amp;&amp; sudo apt upgrade -y</code></b></p>
-<p align="center"> Install GPS software<br><code>sudo apt install gpsd gpsd-clients gpsd-tools -y</code></b></p>
-<p align="center"> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged then plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></b></p>
-<p align="center"> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<br><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code></b><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></b></p>
-<p align="center">To check if the GPS module is running, run either <code>gpsmon</code> or <code>cgps</code> and check if there is any live data. If no data shows up, make sure you are starting the correct GPS module, and make sure you give the module time to fully boot up and connect to satellites</p>
+<p> Run Updates<br><code>sudo apt update &amp;&amp; sudo apt upgrade -y</code></b></p>
+<p> Install GPS software<br><code>sudo apt install gpsd gpsd-clients gpsd-tools -y</code></b></p>
+<p> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged then plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></b></p>
+<p> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<br><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code></b><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></b></p>
+<p>To check if the GPS module is running, run either <code>gpsmon</code> or <code>cgps</code> and check if there is any live data. If no data shows up, make sure you are starting the correct GPS module, and make sure you give the module time to fully boot up and connect to satellites</p>
+<br>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</br>
+<p> Install aircrack-ng, a suite of wifi hacking tools. Specifically, we will be using airmon-ng for the setup of this wardriving rig<br><code>sudo apt install aircrack-ng</code></b></p>
+<p> Run the software to list all available wifi cards connected to the pi.<br><code>sudo airmon-ng</code></b></p>
+<p> Look for the Chipset that resembles your band of WiFi adapter. Anything related to "Broadcom" or "brcmdfmac" will be your raspberry pi onboard adapter, please do not use this. You will be disconnected from SSH. Run this command to place your WiFi adapter into monitor mode. Monitor mode allows it to gather data from all available surrounding networks.<br><code>sudo airmon-ng start &lt;interface_name&gt;</code></b></p>
+<p> Run again to check the status of your adapter. If everything worked as it should, your device will not be listed with 'mon' after the interface name such as wlan1mon, or say 'monitor' or "monitor mode' at the end of your chipset name<br><code>sudo airmon-ng</code></b></p>
+<p> Install this list of dependencies needed for Kismet<br><code>sudo apt install build-essential git libwebsockets-dev pkg-config \
+zlib1g-dev libnl-3-dev libnl-genl-3-dev libcap-dev libpcap-dev \
+libnm-dev libdw-dev libsqlite3-dev libprotobuf-dev libprotobuf-c-dev \
+protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev \
+python3 python3-setuptools python3-protobuf python3-requests \
+python3-numpy python3-serial python3-usb python3-dev python3-websockets \
+librtlsdr0 libubertooth-dev libbtbb-dev libmosquitto-dev</code></b></p>
+&nbsp;
+<p>
+<b>~Downloading, Compiling, and Configuring Kismet~</b></p>
 
 
-
-
-<p align="center"> Start<br><code></code></b></p>
+<p> Start<br><code></code></b></p>
