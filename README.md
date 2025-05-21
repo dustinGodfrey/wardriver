@@ -33,8 +33,24 @@
 
 
 <p align="center">
-<b>Flashing your Raspberry Pi SD Card:</b> <br/></p>
-<p align="center"> Start out by downloading the <a href="https://i.imgur.com/8WkMQ25.png">Raspberry Pi Imager</a>. Make sure your SD card is loaded and recognized by your computer. Select your device from the dropdown menu. To select operating system, select the Raspberry Pi OS Lite 32-bit by clicking "Raspberry Pi OS (Other). Lastly, choose your SD card from the list. **MAKE SURE YOU SELECT THE PROPER DISK TO ENSURE YOU DO NOT REFORMAT YOUR MAIN DRIVE** </p>
-<p align="center"> <img src="https://i.imgur.com/8WkMQ25.png" height="80%" width="80%" alt="Raspberry Pi Imager"/>
-<br /></p>
+<b>~Flashing the Raspberry Pi SD Card~</b> <br/></p>
+<p align="center"> Start out by downloading the <a href="https://i.imgur.com/8WkMQ25.png">Raspberry Pi Imager</a>. Make sure your SD card is loaded and recognized by your computer. Select your device from the dropdown menu. To select operating system, select the Raspberry Pi OS Lite 32-bit by clicking "Raspberry Pi OS (Other). Under the storage dropdown choose your SD card from the list. **MAKE SURE YOU SELECT THE PROPER DISK TO ENSURE YOU DO NOT REFORMAT YOUR MAIN DRIVE** Lastly, agree to adding configurations, add in your home network, and give the pi a host and user name</p>
+<p align="center"> <img src="https://i.imgur.com/8WkMQ25.png" height="60%" width="60%" alt="Raspberry Pi Imager"/>
+</p>
 
+<p align="center">
+<b>~Booting and Connecting to the Pi~</b> <br/></p>
+<p align="center"> Insert the SD card into the pi, connect the WiFi and GPS adapters, then power it on. After the pi fully boots (this might take a while the first time) use the IP address listed in your routers web UI to SSH into the pi using the credentials set during the flashing.<br><code>ssh &lt;username&gt;@&lt;ip-address&gt;</code></b> </p>
+
+<p align="center">
+<b>~Updating, Configuring Hardware, and Installing Dependencies~</b></p>
+<p align="center"> Run Updates<br><code>sudo apt update &amp;&amp; sudo apt upgrade -y</code></b></p>
+<p align="center"> Install GPS software<br><code>sudo apt install gpsd gpsd-clients gpsd-tools -y</code></b></p>
+<p align="center"> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged then plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></b></p>
+<p align="center"> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<br><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code></b><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></b></p>
+<p align="center">To check if the GPS module is running, run either <code>gpsmon</code> or <code>cgps</code> and check if there is any live data. If no data shows up, make sure you are starting the correct GPS module, and make sure you give the module time to fully boot up and connect to satellites</p>
+
+
+
+
+<p align="center"> Start<br><code></code></b></p>
