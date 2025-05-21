@@ -35,12 +35,12 @@
 - <b>Folium</b>
 - <b>systemd</b>
 
-<h2>Project walk-through:</h2>
+<h2>Project Walk-Through: Part 1 - Basic Install and Setup</h2>
 
 
 <p>
 <b>~Flashing the Raspberry Pi SD Card~</b> <br/></p>
-<p> Start out by downloading the <a href="https://i.imgur.com/8WkMQ25.png">Raspberry Pi Imager</a>. Make sure your SD card is loaded and recognized by your computer. Select your device from the dropdown menu. To select operating system, select the Raspberry Pi OS Lite 32-bit by clicking "Raspberry Pi OS (Other). Under the storage dropdown choose your SD card from the list. **MAKE SURE YOU SELECT THE PROPER DISK TO ENSURE YOU DO NOT REFORMAT YOUR MAIN DRIVE** Lastly, agree to adding configurations, add in your home network, and give the pi a host and user name</p>
+<p> Start out by downloading the <a href="https://www.raspberrypi.com/software/">Raspberry Pi Imager</a>. Make sure your SD card is loaded and recognized by your computer. Select your device from the dropdown menu. To select operating system, select the Raspberry Pi OS Lite 32-bit by clicking "Raspberry Pi OS (Other). Under the storage dropdown choose your SD card from the list. **MAKE SURE YOU SELECT THE PROPER DISK TO ENSURE YOU DO NOT REFORMAT YOUR MAIN DRIVE** Lastly, agree to adding configurations, add in your home network, and give the pi a host and user name</p>
 <p align="center"> <img src="https://i.imgur.com/8WkMQ25.png" height="60%" width="60%" alt="Raspberry Pi Imager"/>
 </p>
 &nbsp;
@@ -73,7 +73,7 @@ sudo scons udev-install
 sudo reboot
 </code></pre>
 Huge thanks to <a href="https://github.com/kismetwireless/kismet/issues/426">k-rku</a> on GitHub for this find.</p>
-<p> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged then plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></b></p>
+<p> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged and once again with it plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></b></p>
 <p> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<pre><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code></b><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></pre></p>
 <p>To check if the GPS module is running, run either <code>gpsmon</code> or <code>cgps</code> and check if there is any live data. If no data shows up, make sure you are starting the correct GPS module, and make sure you give the module time to fully boot up and connect to satellites. I prefer to use <code>cgps</code> becuause it will give you a neater, more human-readable version of the data, <code>gpsmon</code> will give you mostly raw data which is a little more difficult to parse.</p>
 <p>Here is an example of the output from <code>cgps</code>. NOTE: For privacy I have redacted my location, but you should see an active Latitude and Longitude for your current location.</p>
@@ -126,4 +126,7 @@ Now we need to update the Kismet configuration file located at <code>/usr/local/
 <p>Enable your service to start from boot</p>
 <pre><code>sudo systemctl daemon-reexec
 sudo systemctl enable kismet.service</code></pre>
-<p>This is a good stopping point for anyone that wants a less complicated setup. It is now fully set up to Wardrive each time the Pi is powered on. </p>
+<p>This is a good stopping point for anyone that wants a less complicated setup. It is now fully set up to Wardrive each time the Pi is powered on.</p>
+<p>For those who want the full final version, complete with tactile button, LEDs, custom startup scripts, and .csv to html mapping, please continue below.</p>
+&nbsp;
+<h2>Project Walk-Through: Part 2 - Advanced Setup</h2>
