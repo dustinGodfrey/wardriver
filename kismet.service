@@ -1,0 +1,14 @@
+[Unit]
+Description=Kismet Wireless Sensor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/kismet-autolog.sh
+User=warpig
+Group=warpig
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
