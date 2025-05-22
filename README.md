@@ -128,6 +128,14 @@ Now we need to update the Kismet configuration file located at <code>/usr/local/
 <pre><code>sudo systemctl daemon-reexec
 sudo systemctl enable kismet.service</code></pre>
 <p>This is a good stopping point for anyone that wants a less complicated setup. It is now fully set up to Wardrive each time the Pi is powered on.</p>
+<p>When you are back at your home network, you can power on and ssh into your pi to get the log files. Because Kismet will run on boot, if you do not want to log while transfering files just run <code>sudo systemctl stop kismet.service</code>. Move to the directory where you logs are saved and scp them over to your main computer.</p>
+<p><code>scp log_file main_user@main_user_ip:path_to_save_logs</code></p>
+<p>Kismet will log the following log types:</p>
+<br>.wiglecsv - This can be uploaded directly to Wigle.net, or duplicated as .csv to open in Excel. Shows all the good stuff: MAC addresses, SSID, GPS Cords, etc.</br>
+<br>.kismet - This is a SQL database with more info than the .wiglecsv log. Parsing SQL is out of the scope of this project but if you have experience you can pull a lot of data out of it. Contains a lot of specific data like manufacturer information for the devices logged</br>
+<br>.pcapng - A network capture file meant to be opened with Wireshark. Shows information about the communications between wireless devices and your wardriving rig</br>
+</p>
+<br></br>
 <p>For those who want the full final version, complete with tactile button, LEDs, custom startup scripts, and .csv to html mapping, please continue below.</p>
 &nbsp;
 <h2>Project Walk-Through: Part 2 - Advanced Setup</h2>
