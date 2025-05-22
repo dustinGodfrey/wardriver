@@ -4,7 +4,6 @@
 <br><a href="https://wigle.net">
 <img border="0" src="https://wigle.net/bi/V_jgKO+KY6mUnLGeWqrXRw.png">
 </a>
-</br>
   </h1>
 </div>
 
@@ -47,14 +46,14 @@
 &nbsp;
 
 <p>
-<b>~Booting and Connecting to the Pi~</b> <br/></p>
-<p> Insert the SD card into the pi, connect the WiFi and GPS adapters, then power it on. After the pi fully boots (this might take a while the first time) use the IP address listed in your routers web UI to SSH into the pi using the credentials set during the flashing.<br><code>ssh &lt;username&gt;@&lt;ip-address&gt;</code></b> </p>
+~Booting and Connecting to the Pi~</b> <br/></p>
+<p> Insert the SD card into the pi, connect the WiFi and GPS adapters, then power it on. After the pi fully boots (this might take a while the first time) use the IP address listed in your routers web UI to SSH into the pi using the credentials set during the flashing.<br><code>ssh &lt;username&gt;@&lt;ip-address&gt;</code> </p>
 &nbsp;
 
 <p>
-<b>~Updating, Configuring Hardware, and Installing Dependencies~</b></p>
-<p> Run Updates<br><code>sudo apt update &amp;&amp; sudo apt upgrade -y</code></b></p>
-<p> Install GPS software<br><code>sudo apt install gpsd gpsd-clients gpsd-tools -y</code></b></p>
+~Updating, Configuring Hardware, and Installing Dependencies~</b></p>
+<p> Run Updates<br><code>sudo apt update &amp;&amp; sudo apt upgrade -y</code></p>
+<p> Install GPS software<br><code>sudo apt install gpsd gpsd-clients gpsd-tools -y</code></p>
 <p>At this point, we will update GPSD to its current version. I wish I had known about this sooner, as I spent days troubleshooting this. The version of GPSD that downloads from the repo is not the current version and will cause issues with Kismet. Without updating GPSD to v3.25 Kismet will not correctly log the GPS coodinates for your drives. My kismet was logging the initial location that the GPS logged for every single network found. If I restarted Kismet, it would then log the rest of those with the new location after the restart. So I would have a list of networks but all with the same GPS location.</p>
 <p> To download the latest version, we will need to compile it from source code. Please enter the following commands to update..
 <pre><code>
@@ -73,26 +72,26 @@ sudo scons
 sudo scons udev-install
 sudo reboot
 </code></pre>
-Huge thanks to <a href="https://github.com/kismetwireless/kismet/issues/426">k-rku</a> on GitHub for this find.</p>
-<p> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged and once again with it plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></b></p>
-<p> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<pre><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code></b><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></pre></p>
+Huge thanks to <a href="https://github.com/kismetwireless/kismet/issues/426">k-rku</a> on GitHub for this find.
+<p> List all devices to find your GPS module. If you are having trouble locating it, run the command with the module unplugged and once again with it plugged in, and find the one that appears. Mine is listed as <code>/dev/ttyACM0</code>.<br><code>ls /dev/</code></p>
+<p> Run the next series of commands to stop any current use of GPS sockets, disable them from starting on boot, then link your GPS module to that socket<pre><code>sudo systemctl stop gpsd.socket</code></b><br><code>sudo systemctl disable gpsd.socket</code><br><code>sudo gpsd /dev/name_of_your_device -F /var/run/gpsd.sock</code></pre></p>
 <p>To check if the GPS module is running, run either <code>gpsmon</code> or <code>cgps</code> and check if there is any live data. If no data shows up, make sure you are starting the correct GPS module, and make sure you give the module time to fully boot up and connect to satellites. I prefer to use <code>cgps</code> becuause it will give you a neater, more human-readable version of the data, <code>gpsmon</code> will give you mostly raw data which is a little more difficult to parse.</p>
 <p>Here is an example of the output from <code>cgps</code>. NOTE: For privacy I have redacted my location, but you should see an active Latitude and Longitude for your current location.</p>
 <p align="center"> <img src="https://i.imgur.com/lNopkE2.png" height="60%" width="60%" alt="cgps output"/>
 </p>
-<p> Install aircrack-ng, a suite of wifi hacking tools. Specifically, we will be using airmon-ng for the setup of this wardriving rig<br><code>sudo apt install aircrack-ng</code></b></p>
-<p> Run the software to list all available wifi cards connected to the pi.<br><code>sudo airmon-ng</code></b></p>
-<p> Look for the Chipset that resembles your band of WiFi adapter. Anything related to "Broadcom" or "brcmdfmac" will be your raspberry pi onboard adapter, please do not use this. You will be disconnected from SSH. Run this command to place your WiFi adapter into monitor mode. Monitor mode allows it to gather data from all available surrounding networks.<br><code>sudo airmon-ng start &lt;interface_name&gt;</code></b></p>
-<p> Run again to check the status of your adapter. If everything worked as it should, your device will not be listed with 'mon' after the interface name such as wlan1mon, or say 'monitor' or "monitor mode' at the end of your chipset name<br><code>sudo airmon-ng</code></b></p>
+<p> Install aircrack-ng, a suite of wifi hacking tools. Specifically, we will be using airmon-ng for the setup of this wardriving rig<br><code>sudo apt install aircrack-ng</code></p>
+<p> Run the software to list all available wifi cards connected to the pi.<br><code>sudo airmon-ng</code></p>
+<p> Look for the Chipset that resembles your band of WiFi adapter. Anything related to "Broadcom" or "brcmdfmac" will be your raspberry pi onboard adapter, please do not use this. You will be disconnected from SSH. Run this command to place your WiFi adapter into monitor mode. Monitor mode allows it to gather data from all available surrounding networks.<br><code>sudo airmon-ng start &lt;interface_name&gt;</code></p>
+<p> Run again to check the status of your adapter. If everything worked as it should, your device will not be listed with 'mon' after the interface name such as wlan1mon, or say 'monitor' or "monitor mode' at the end of your chipset name<br><code>sudo airmon-ng</code></p>
 <p> Install this list of dependencies needed for Kismet<pre><code>sudo apt install build-essential git libwebsockets-dev pkg-config \
 zlib1g-dev libnl-3-dev libnl-genl-3-dev libcap-dev libpcap-dev \
 libnm-dev libdw-dev libsqlite3-dev libprotobuf-dev libprotobuf-c-dev \
 protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev \
 python3 python3-setuptools python3-protobuf python3-requests \
 python3-numpy python3-serial python3-usb python3-dev python3-websockets \
-librtlsdr0 libubertooth-dev libbtbb-dev libmosquitto-dev</code></pre></p>
+librtlsdr0 libubertooth-dev libbtbb-dev libmosquitto-dev</code></pre>
 &nbsp;
-<p><b>~Downloading, Compiling, and Configuring Kismet~</b></p>
+<p>~Downloading, Compiling, and Configuring Kismet~</b></p>
 <p>All the guides and walkthroughs that I read while building this project would download Kismet from repos using <code>sudo apt install kismet</code>. Unfortunately, I could never get this to pull down so I resulted to having to download and compile kismet from source code. To download and compile from source, enter the following commands..
 <pre><code>git clone https://www.kismetwireless.net/git/kismet.git
 cd kismet
@@ -101,41 +100,42 @@ make
 sudo make suidinstall
 sudo usermod -aG kismet &lt;your_user&gt;
 mkdir wardriving
-cd wardriving</code></pre></p>
+cd wardriving</code></pre>
 <p>
 Now we need to update the Kismet configuration file located at <code>/usr/local/etc/kismet.conf</code>
-  <br><code>sudo nano /usr/local/etc/kismet.conf</code></br>
-  <br>Scroll and look for this line</br>
+  <br><code>sudo nano /usr/local/etc/kismet.conf</code>
+  <br>Scroll and look for this line
   <p align="center"> <img src="https://i.imgur.com/A0VMZPZ.png" height="60%" width="60%" alt="wifi config"/>
 </p>
   <p>And change the source to the interface name you are using for your WiFi adapter</p>
-</p>
-<br>Scroll more until you find this line</br>
+
+<br>Scroll more until you find this line
   <p align="center"> <img src="https://i.imgur.com/hIe9isz.png" height="60%" width="60%" alt="gps config"/></p>
-<p>And change yours to match the one in the image.<br>Save and Exit the configuration file.</br></p></p>
+<p>And change yours to match the one in the image.<br>Save and Exit the configuration file.</p>
 <p>Kismet comes with a logging config that you can edit to customize where and how you want your logs handled. This configuration can be located at <code>/usr/local/etc/kismet_logging.conf</code></p>
 <p>Here you can enable logging and select which log types you would like kismet to use. Edit the log_prefix section to point where you want your logs saved. Ex: <code>log_prefix=/home/wardriver/kismet_logs/</code>. But make sure that this directory exists before you start kismet for the first time. You will receive errors and it will not log. Kismet will not create this directory for you.</p>
 <p align="center"> <img src="https://i.imgur.com/JQk1pM0.png" height="60%" width="60%" alt="logging_enable"/></p>
 <p>Here you can customize exactly how kismet will name the log</p>
 <p align="center"> <img src="https://i.imgur.com/6uKAHwu.png" height="60%" width="60%" alt="logging_naming"/></p>
-<b>~Starting and Using Kismet~</b> <br/></p>
+<b>~Starting and Using Kismet~</b>
 <p>From here you can create a systemd service to start kismet everytime the Pi is booted on. This is the simplest way to launch kismet from the headless system. I created a more custom and complex way to start kismet involving a tactile button and LEDS which I will go over in Part 2.
 </p>
 <p><code>sudo nano /etc/systemd/system/kismet.service</code></p>
-<p>Paste in the configuration file from <a href="https://github.com/dustinGodfrey/WardrivingRig/blob/main/kismet.service">kismet.service</a>. Make sure to change the 'user' and 'group' to match your configurations.</p><b>!IMPORTANT! If you plan on stopping with Part 1, you need to change </b><code>ExecStart=/usr/local/bin/kismet-autolog.sh</code> to <code>ExecStart=/usr/local/bin/kismet</code>.<b> The line in the config is for the advanced version in part 2. If you plan on going that far, leave the line as it is</b></p>
+<p>Paste in the configuration file from <a href="https://github.com/dustinGodfrey/WardrivingRig/blob/main/kismet.service">kismet.service</a>. Make sure to change the 'user' and 'group' to match your configurations.</p><b>!IMPORTANT! If you plan on stopping with Part 1, you need to change </b><code>ExecStart=/usr/local/bin/kismet-autolog.sh</code> to <code>ExecStart=/usr/local/bin/kismet</code>.<b> The line in the config is for the advanced version in part 2. If you plan on going that far, leave the line as it is</b>
 <p align="center"> <img src="https://i.imgur.com/6Eq3Kj8.png" height="60%" width="60%" alt="kismet.service"/></p>
 <p>Enable your service to start from boot</p>
 <pre><code>sudo systemctl daemon-reexec
 sudo systemctl enable kismet.service</code></pre>
+<p>If you are having trouble with your GPS not getting a fix before Kismet fully launches, add a small delay in your Systemd service script under the [Service] heading. Add <code>ExecStartPre=/bin/sleep 15</code> BEFORE the <code>ExecStart</code> line. You can use any number you want, play around with different times to dial in your system. Maybe as little as 5 seconds could be enough for you, maybe you need a little longer.</p>
+<h2></h2>
 <p>This is a good stopping point for anyone that wants a less complicated setup. It is now fully set up to Wardrive each time the Pi is powered on.</p>
 <p>When you are back at your home network, you can power on and ssh into your pi to get the log files. Because Kismet will run on boot, if you do not want to log while transfering files just run <code>sudo systemctl stop kismet.service</code>. Move to the directory where you logs are saved and scp them over to your main computer.</p>
 <p><code>scp log_file main_user@main_user_ip:path_to_save_logs</code></p>
 <p>Kismet will log the following log types:</p>
-<br>.wiglecsv - This can be uploaded directly to Wigle.net, or duplicated as .csv to open in Excel. Shows all the good stuff: MAC addresses, SSID, GPS Coordinates, etc.</br>
-<br>.kismet - This is a SQL database with more info than the .wiglecsv log. Parsing SQL is out of the scope of this project but if you have experience you can pull a lot of data out of it. Contains a lot of specific data like manufacturer information for the devices logged</br>
-<br>.pcapng - A network capture file meant to be opened with Wireshark. Shows information about the communications between wireless devices and your wardriving rig</br>
-</p>
-<br></br>
+<p>.wiglecsv - This can be uploaded directly to Wigle.net, or duplicated as .csv to open in Excel. Shows all the good stuff: MAC addresses, SSID, GPS Coordinates, etc.</p>
+<p>.kismet - This is a SQL database with more info than the .wiglecsv log. Parsing SQL is out of the scope of this project but if you have experience you can pull a lot of data out of it. Contains a lot of specific data like manufacturer information for the devices logged</p>
+<p>.pcapng - A network capture file meant to be opened with Wireshark. Shows information about the communications between wireless devices and your wardriving rig</p>
+<br>
 <p>For those who want the full final version, complete with tactile button, LEDs, custom startup scripts, and .csv to html mapping, please continue below.</p>
 &nbsp;
 <h2>Project Walk-Through: Part 2 - Advanced Setup</h2>
