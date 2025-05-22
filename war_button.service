@@ -1,0 +1,21 @@
+[Unit]
+Description=Python Button Startup Script
+After= multi-user.target network-online.target dev-ttyACM0.device
+Wants=network-online.target
+Requires=multi-user.target
+
+[Service]
+ExecStartPre=/bin/sleep 15
+ExecStart=/usr/bin/python3 /home/warpig/wardriving/scripts/kismet.py
+Restart=on-failure
+RestartSec=5
+User=warpig
+Group=warpig
+WorkingDirectory=/home/warpig/wardriving
+StandardOutput=journal
+StandardError=journal
+Type=simple
+Environment=LC_ALL=en_US.UTF-8
+Environment=LANG=en_US.UTF-8
+[Install]
+WantedBy=multi-user.target
