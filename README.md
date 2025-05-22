@@ -118,8 +118,8 @@ Now we need to update the Kismet configuration file located at <code>/usr/local/
 <p align="center"> <img src="https://i.imgur.com/JQk1pM0.png" height="60%" width="60%" alt="logging_enable"/></p>
 <p>Here you can customize exactly how kismet will name the log</p>
 <p align="center"> <img src="https://i.imgur.com/6uKAHwu.png" height="60%" width="60%" alt="logging_naming"/></p>
-<p>
-  From here you can create a systemd service to start kismet everytime the Pi is booted on. This is the simplest way to launch kismet from the headless system. I created a more custom and complex way to start kismet involving a tactile button and LEDS which I will go into a little later.
+<b>~Starting and Using Kismet~</b> <br/></p>
+<p>From here you can create a systemd service to start kismet everytime the Pi is booted on. This is the simplest way to launch kismet from the headless system. I created a more custom and complex way to start kismet involving a tactile button and LEDS which I will go over in Part 2.
 </p>
 <p><code>sudo nano /etc/systemd/system/kismet.service</code></p>
 <p>Paste in the configuration file from <a href="https://github.com/dustinGodfrey/WardrivingRig/blob/main/kismet.service">kismet.service</a>. Make sure to change the 'user' and 'group' to match your configurations.</p><b>!IMPORTANT! If you plan on stopping with Part 1, you need to change </b><code>ExecStart=/usr/local/bin/kismet-autolog.sh</code> to <code>ExecStart=/usr/local/bin/kismet</code>.<b> The line in the config is for the advanced version in part 2. If you plan on going that far, leave the line as it is</b></p>
