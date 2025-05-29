@@ -78,7 +78,7 @@ try:
                 GPIO.output(16, GPIO.LOW)
 
             elif GPIO.input(7) == GPIO.LOW:
-                subprocess.run(['sudo', 'airmon-ng', 'start', 'realtek0'])
+                subprocess.run(['sudo', 'airmon-ng', 'start', 'wlan1'])
                 subprocess.Popen(['/usr/local/bin/kismet-autolog.sh'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 print("Starting Kismet")
                 time.sleep(0.5)
