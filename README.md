@@ -204,7 +204,9 @@ sudo nmcli connection reload</pre>
 &nbsp;
 <h3>~ Wigle.net ~</h3>
 <p><a href="https://wigle.net">Wigle.net</a> is a gamified way to store all of your drives from Kismet in a central location with other users who want to upload their drives as well. This creates a huge ecosystem, filled with over 21 billion WiFi observations and over 83,000 users. After each successful upload, your data is added to the central repository and you are given a score based on the amount of networks you have discovered. You can compare your stats to other users and use their built in map to see how you stack against them. Kismet will automatically log <code>.wiglecsv</code> which we duplicated and converted above to use with the Folium maps. This file is designed to be uploaded directly to Wigle.net without any manipulation to the data whatsoever.</p>
-<p>Spending time on Wigle.net you will notice that it accepts networks in the form of WiFi, Bluetooth, and Cell Towers. Kismet itself will only log the WiFi connections, but if you build your own wardriving rig with ESP-32s or use the official Wigle.net Android app, you can successfully log WiFi, Bluetooth, and Cell Tower connections. The Wigle Android app gives you the ability to upload your drives straight from your phone.
+<p>Spending time on Wigle.net you will notice that it accepts networks in the form of WiFi, Bluetooth, and Cell Towers. Kismet itself will only log the WiFi connections, but if you build your own wardriving rig with ESP-32s or use the official Wigle.net Android app, you can successfully log WiFi, Bluetooth, and Cell Tower connections. The Wigle Android app gives you the ability to upload your drives straight from your phone.</p>
+<p align="center"> <img src="https://i.imgur.com/hPpu2mU.png" height="75%" width="75%" alt="wigle1"/></p>
+<p align="center"> <img src="https://i.imgur.com/dmZC7xH.png" height="75%" width="75%" alt="wigle2"/></p>
 
 &nbsp;
 <h3>~ Afterthoughts and What I Learned ~</h3>
