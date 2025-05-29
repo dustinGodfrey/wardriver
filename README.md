@@ -209,6 +209,7 @@ sudo nmcli connection reload</pre>
 <p align="center"> <img src="https://i.imgur.com/dmZC7xH.png" height="75%" width="75%" alt="wigle2"/></p>
 
 &nbsp;
+<h2>Project Recap</h2>
 <h3>~ Afterthoughts and What I Learned ~</h3>
 <p>I learned a lot from this project, both on a technical level and a social level. Technically, I learned and expanded my knowledge on a number of different tasks such as hardware-to-software integration, controlling hardware with python, creating efficient systemd services, and parsing data into useful information.</p>
 <p>Socially, this is where the project took a turn and I became very concerned with the way the public uses and secures their networks. Due to my degree, I was trying to view this project through the lens of cybersecurity, so my initial goal was to sniff out the vulnerabilities associated with setting up wireless networks. Initially, I hypothesized that there would be many unsecure network protocols, such as WEP. What I found was primarily WPA2/3 networks, along with open networks for restaurants and businesses, but the most shocking thing was a huge percentage of the "secure" WPA2/3 networks were using default credentials set by the manufacturer.</p>
