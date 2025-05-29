@@ -15,7 +15,7 @@ seen_ssid = set()
 for rows in wiglefile[['MAC', 'SSID', 'AuthMode', 'FirstSeen', 'Channel', 'RSSI', 'CurrentLatitude', 'CurrentLongitude', 'AltitudeMeters', 'AccuracyMeters', 'Type']].values:
     ssid = str(rows[1]).strip()
 
-    # Skip empty, duplicate, or sketchy SSIDs
+    
     if (
         not ssid
         or ssid in seen_ssid
