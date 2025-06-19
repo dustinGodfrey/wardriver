@@ -9,7 +9,6 @@
 
 <h2>Project Overview</h2>
 <p>This project consists of using a Raspberry Pi 4, WiFi and GPS devices, and Wardriving software to create a fully headless, portable wardriving rig, with the ability after drives to export the data to another system to clean up and create an interactive map that can be locally hosted.</p>
-<p>The build started as a final project for my Wireless Networking class for my cybersecurity degree but scope creep quickly set in, with the project ending on v3 or v4. I still need to model and print a case, as that will be the final part of the project for now. </p>
 <p>This project not only strengthened my knowledge and skills when it comes to programming, configuration, and hardware-to-software integration, but also from a cybersecurity point of view it opened my eyes to how insecure public networks can be due to lack of knowledge, training, and proper configurations. I found many avoidable mistakes that if remedied, would instantly make a vast difference on personal security and protection. </p>
 
 
