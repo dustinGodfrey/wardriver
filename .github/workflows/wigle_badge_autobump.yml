@@ -1,0 +1,27 @@
+name: Update Wigle Badge Cachebust Daily
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # Runs daily at 4 AM UTC
+  workflow_dispatch:
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update Wigle badge cachebust in README.md
+        run: |
+          DATE=$(date +"%Y%m%d")
+          sed -i "s#\(wigle.net/bi/[^?]*\)\?cachebust=[0-9]*#\1?cachebust=$DATE#g" README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add README.md
+          git commit -m "Auto-update Wigle badge cachebust to $DATE" || echo "No changes to commit"
+          git push
