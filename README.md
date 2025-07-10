@@ -151,7 +151,7 @@ cd kismet
 ./configure
 make
 sudo make suidinstall
-sudo usermod -aG kismet &lt;your_user&gt;
+sudo usermod -aG kismet <your_user>
 mkdir wardriving
 cd wardriving
 ```
